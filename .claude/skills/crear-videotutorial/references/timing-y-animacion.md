@@ -63,24 +63,23 @@ Notas:
    `Math.round(duracionNarracionSeg * FPS)`. La duración total de la voz = `endMs` de la última
    palabra de `tutorial.json`.
 
-## 5. Layout por orientación
+## 5. Formato y orientación (vertical = móvil · horizontal = escritorio)
 
-La composición es vertical por defecto. Los rects viven en `src/components/promo/Scene.tsx`.
+El formato lo elige el usuario y **acopla tres cosas**:
 
-- **Vertical 1080×1920** (por defecto):
-  ```js
-  const PHONE_FULL  = { x: 198, y: 230, w: Math.round(1480 * (390/844)), h: 1480 };
-  const BROWSER_FULL = { x: 40, y: 470, w: 1000, h: Math.round(1000 / (1920/1080)) };
-  ```
-- **Horizontal 1920×1080** (si el usuario lo elige, cambia `WIDTH/HEIGHT` en `Root.tsx` Y estos
-  rects). Un buen punto de partida:
-  ```js
-  // teléfono centrado-derecha, con panel/keywords a la izquierda
-  const PHONE_FULL  = { x: 1180, y: 110, w: Math.round(860 * (390/844)), h: 860 };
-  // navegador grande centrado
-  const BROWSER_FULL = { x: 220, y: 150, w: 1480, h: Math.round(1480 / (1920/1080)) };
-  ```
-  Revisa visualmente en `npm run dev` y ajusta para que nada se solape.
+| Formato | `ORIENTATION` en `Root.tsx` | Lienzo | Captura (Fase 5) | `device` de sección |
+|---|---|---|---|---|
+| Vertical | `"vertical"` | 1080×1920 | proyecto en **móvil** (`device: "mobile"`) | `"phone"` |
+| Horizontal | `"horizontal"` | 1920×1080 | proyecto en **escritorio** (`device: "desktop"`) | `"browser"` |
+
+- Cambiar de formato es **una línea**: la constante `ORIENTATION` en `src/Root.tsx`. Aplica a las
+  dos composiciones.
+- Los rects de `src/components/promo/Scene.tsx` son **responsivos** (`computeRects(width, height)`):
+  se recolocan solos para vertical u horizontal. **No edites rects a mano.** Si necesitas afinar el
+  tamaño, cambia los factores `0.78`/`0.82`/`0.92`/`0.78` de `computeRects`, no números absolutos.
+- Coherencia de viewport: para un vídeo **vertical** captura SIEMPRE en móvil y usa `device: "phone"`;
+  para **horizontal**, captura en escritorio y usa `device: "browser"`. No mezcles salvo petición
+  expresa del usuario. Revisa el encuadre en `npm run dev`.
 
 ## 6. Selectores para `capture.config.mjs` (hotspots fiables)
 

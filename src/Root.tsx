@@ -4,10 +4,13 @@ import { Reel, reelSchema, type ReelProps } from "./Reel";
 import { PromoVideo, promoSchema, type PromoProps } from "./PromoVideo";
 
 const FPS = 30;
-// FORMATO PRINCIPAL: vertical 1080×1920 (smartphone / Reels / Shorts).
-// El videotutorial muestra pantallas de tu app en tamaño móvil.
-const WIDTH = 1080;
-const HEIGHT = 1920;
+// FORMATO — ELECCIÓN DEL USUARIO. Cambia SOLO esta línea:
+//   "vertical"   -> 1080×1920  (Reels / Shorts / TikTok / móvil)
+//   "horizontal" -> 1920×1080  (YouTube / landing / demo de escritorio)
+// Los encuadres de las pantallas (src/components/promo/Scene.tsx) se recolocan
+// automáticamente según estas dimensiones — no hay que tocar nada más.
+const ORIENTATION: "vertical" | "horizontal" = "vertical";
+const [WIDTH, HEIGHT] = ORIENTATION === "vertical" ? [1080, 1920] : [1920, 1080];
 
 // "Tutorial" = composición principal: capturas de tu app (Assets/captures/*.png)
 // enmarcadas como smartphone, con cursor animado + narración (ElevenLabs).

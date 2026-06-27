@@ -50,14 +50,24 @@ Trabaja secuencialmente. Anuncia en qué fase estás y qué vas a producir.
   (`whisper-cpp/` presente o `node scripts/install-whisper-cpp.mjs small`). Si falta algo, dilo y
   resuélvelo antes de seguir.
 
-### Fase 1 · Formato (horizontal o vertical)
-Pregunta al usuario el destino del vídeo y elige el lienzo:
-- **Vertical 1080×1920** — Reels / Shorts / TikTok / móvil. Las pantallas se ven en marco de teléfono.
-- **Horizontal 1920×1080** — YouTube / landing / demo de escritorio. Buen encaje para apps de desktop.
+### Fase 1 · Formato (horizontal o vertical — los dos son de primera clase)
+**El formato lo decide el usuario; pregúntaselo, no asumas vertical.** El formato determina, de
+punta a punta, en qué **viewport se captura el proyecto** y cómo se enmarca:
 
-Aplica la elección en `src/Root.tsx` (constantes `WIDTH`/`HEIGHT` de la composición `Tutorial`).
-Si eliges horizontal, además hay que reubicar los rects de `src/components/promo/Scene.tsx`
-(ver "Layout por orientación" en `references/timing-y-animacion.md`).
+| Formato | Lienzo | Se captura el proyecto en… | `device` de captura/escena |
+|---|---|---|---|
+| **Vertical** | 1080×1920 | **móvil** (la web/app en su versión responsive móvil) | `mobile` / `phone` (marco de teléfono) |
+| **Horizontal** | 1920×1080 | **escritorio** (la versión desktop) | `desktop` / `browser` (ventana de navegador) |
+
+Es decir: **vertical ⇒ todo el proyecto en formato móvil; horizontal ⇒ en escritorio.** No mezcles
+(no captures desktop para un vídeo vertical ni móvil para uno horizontal) salvo que el usuario lo
+pida expresamente.
+
+Aplicar el formato es **una sola línea** en `src/Root.tsx`: la constante
+`ORIENTATION: "vertical" | "horizontal"`. Los encuadres (`src/components/promo/Scene.tsx`) son
+**responsivos**: se recolocan solos según las dimensiones, así que no hay que tocar nada más en el
+lienzo. Lo que sí debes alinear con el formato es el **viewport de captura** (Fase 5) y el `device`
+de cada sección (Fase 6), según la tabla de arriba.
 
 ### Fase 2 · Guion desde el user journey (analiza el código)
 1. Explora el proyecto padre: rutas/páginas, navegación, componentes clave, el "happy path".
@@ -91,6 +101,9 @@ Pídele que te avise cuando el archivo esté en su sitio. No inventes la voz tú
 2. A partir de la tabla escena → ruta → elemento, escribe **`scripts/capture.config.mjs`**:
    `baseUrl`, `auth` (si hay login), y un `steps[]` por pantalla con sus `hotspots[]` (los elementos
    que el cursor señalará, por `text`/`role`/`css`/`testId`).
+   - **El `device` de cada step debe seguir el formato (Fase 1):** vertical ⇒ `device: "mobile"`
+     (captura la versión móvil del proyecto); horizontal ⇒ `device: "desktop"`. Mantén un solo
+     viewport en todo el vídeo salvo que el usuario pida mezclar.
 3. Ejecuta `npm run capture` → `Assets/captures/*.png` + `Assets/captures/hotspots.json`.
 4. Si algún hotspot sale "NO ENCONTRADO", ajusta el selector y repite. Cómo elegir buenos selectores:
    `references/timing-y-animacion.md`.
@@ -98,6 +111,8 @@ Pídele que te avise cuando el archivo esté en su sitio. No inventes la voz tú
 ### Fase 6 · Montar la animación (cursor sincronizado a la voz)
 Edita `src/PromoVideo.tsx` → `buildSections()`:
 - Una sección por escena del guion, con su captura (`frames[].src`) y sus eventos de cursor.
+- **`device` de cada sección acorde al formato (Fase 1):** `"phone"` en vertical, `"browser"` en
+  horizontal. El encuadre se ajusta solo a las dimensiones; tú solo eliges el marco correcto.
 - Ajusta cada `from`/`to` (segundos) a los `startMs/endMs` de Whisper de la frase que narra esa
   escena. Coloca cada `cursor[{ at, click }]` en el instante en que la voz nombra la acción.
 - Usa los hotspots por nombre para que el "tap" caiga exacto sobre el botón real.
@@ -124,5 +139,7 @@ npx remotion render Tutorial out/tutorial.mp4       # render final
 ## Recordatorios
 - **No saltes el handoff de ElevenLabs** (fase 3): la voz la genera y coloca el usuario.
 - **No renderices sin revisar** captions (fase 4) ni la sincronía en Studio (fase 7).
-- Si el usuario quiere **horizontal**, ajusta `Root.tsx` Y los rects de `Scene.tsx`.
+- **Formato = elección del usuario.** Vertical ⇒ proyecto en **móvil** (`device: mobile`/`phone`);
+  horizontal ⇒ proyecto en **escritorio** (`device: desktop`/`browser`). Cambiarlo es una línea
+  (`ORIENTATION` en `Root.tsx`); los encuadres se adaptan solos.
 - Mantén el guion en el **tono de marca** del proyecto si existe.

@@ -36,6 +36,11 @@ export const CAPTURE = {
   //   waitForUrl: /\/(dashboard|app|home)/, // regex; opcional
   // },
 
+  // El `device` debe SEGUIR EL FORMATO del vídeo (ORIENTATION en src/Root.tsx):
+  //   vídeo VERTICAL   -> device: "mobile"   (capturas de la versión móvil del proyecto)
+  //   vídeo HORIZONTAL -> device: "desktop"  (capturas de la versión de escritorio)
+  // Mantén un único device en todos los steps salvo que quieras mezclar a propósito.
+  //
   // Cada step = una pantalla del tutorial. `name` es el basename del PNG y la clave
   // que referenciarás en src/PromoVideo.tsx (Assets/captures/<name>.png).
   steps: [

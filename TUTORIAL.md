@@ -1,7 +1,9 @@
 # Cómo hacer un videotutorial de TU software
 
-Esta plantilla genera un **videotutorial vertical (1080×1920, tamaño smartphone)**
-del software donde la coloques. El flujo es:
+Esta plantilla genera un **videotutorial** del software donde la coloques, en el **formato que
+elijas**: **vertical** (1080×1920, capturas de la versión **móvil**) u **horizontal** (1920×1080,
+capturas de la versión de **escritorio**). El formato se cambia con una línea (`ORIENTATION` en
+`src/Root.tsx`) y los encuadres se adaptan solos. El flujo es:
 
 ```
 Capturas de tu app (Playwright)  +  Narración (ElevenLabs .wav)  →  Remotion  →  out/tutorial.mp4
@@ -42,8 +44,9 @@ o copia una carpeta `whisper-cpp/` ya compilada de otro proyecto.
    - `baseUrl` → dónde corre tu app.
    - `auth` → login si hace falta (o `null`).
    - `steps[]` → una entrada por pantalla: `name` (= nombre del PNG), `path`, `device`
-     (`"mobile"` por defecto), `actions[]` (clics previos para llegar al estado) y
-     `hotspots[]` (elementos donde el cursor hará "tap", con un selector por `text`/`role`/`css`/`testId`).
+     (**sigue el formato**: `"mobile"` si tu vídeo es vertical, `"desktop"` si es horizontal),
+     `actions[]` (clics previos para llegar al estado) y `hotspots[]` (elementos donde el cursor
+     hará "tap", con un selector por `text`/`role`/`css`/`testId`).
 3. **Captura**:
    ```bash
    npm run capture

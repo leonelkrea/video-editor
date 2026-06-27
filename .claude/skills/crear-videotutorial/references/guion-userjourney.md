@@ -50,7 +50,29 @@ interna que el espectador no conoce.
 | 3 | "Rellena y guarda" | `/new` | mobile | botón "Guardar" | tap |
 
 Los nombres de la columna "hotspot" se convertirán en claves en `capture.config.mjs` y en
-`hotspots.json`; los de "Ruta" en `path`; "Dispositivo" en `device`.
+`hotspots.json`; los de "Ruta" en `path`; "Dispositivo" en `device`. **La columna "Dispositivo"
+la fija el formato (Fase 1):** todo `mobile` si el vídeo es vertical, todo `desktop` si es
+horizontal — no la mezcles salvo petición expresa.
+
+### Ejemplo mínimo de entrega (vertical, app de gastos)
+
+**Texto para ElevenLabs** (lo que oirá el espectador):
+> "¿Anotas tus gastos en mil sitios? Aquí no. Abre la app y verás tu mes de un vistazo. Para
+> registrar uno nuevo, toca el botón de añadir, pon el importe y guarda. Listo: tu resumen se
+> actualiza al instante. Empieza gratis en tu-dominio.com."
+
+**Tabla de escenas** (el puente a las fases 5–6):
+
+| # | Narración | Ruta | Dispositivo | Hotspot | Acción |
+|---|---|---|---|---|---|
+| 1 | "Abre la app y verás tu mes de un vistazo" | `/dashboard` | mobile | `resumen-mes` | mostrar |
+| 2 | "toca el botón de añadir" | `/dashboard` | mobile | `btn-nuevo` | tap |
+| 3 | "pon el importe y guarda" | `/nuevo` | mobile | `btn-guardar` | tap |
+| 4 | "tu resumen se actualiza al instante" | `/dashboard` | mobile | `resumen-mes` | mostrar |
+
+Esta doble entrega (texto + tabla) es **obligatoria** antes de pasar a ElevenLabs: es lo que hace
+que las fases siguientes (captura y cursor sincronizado) tengan a dónde agarrarse. No saltes a
+escribir `capture.config.mjs` ni `buildSections()` sin haber confirmado el guion con el usuario.
 
 ## 3. Duración según formato
 

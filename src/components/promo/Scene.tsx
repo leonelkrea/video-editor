@@ -1,4 +1,4 @@
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { BrowserFrame } from "./BrowserFrame";
 import { PhoneFrame, type Rect } from "./PhoneFrame";
 import { Cursor, type CursorKey } from "./Cursor";
@@ -20,11 +20,23 @@ export type Shot = {
   punchTo?: { fx: number; fy: number };
 };
 
-// Rects para lienzo VERTICAL 1080×1920.
-// El teléfono va centrado y grande (full-bleed); el navegador (capturas desktop
-// ocasionales) va como tarjeta centrada más pequeña.
-const PHONE_FULL: Rect = { x: 198, y: 230, w: Math.round(1480 * (390 / 844)), h: 1480 };
-const BROWSER_FULL: Rect = { x: 40, y: 470, w: 1000, h: Math.round(1000 / (1920 / 1080)) };
+// Rects RESPONSIVOS: se derivan de las dimensiones reales de la composición, así el
+// MISMO código sirve para vertical (1080×1920) y horizontal (1920×1080). El formato es
+// elección del usuario; basta cambiar WIDTH/HEIGHT en Root.tsx y todo se recoloca solo.
+const PHONE_ASPECT = 390 / 844;   // ancho/alto del contenido del teléfono
+const BROWSER_ASPECT = 1920 / 1080;
+const computeRects = (W: number, H: number): { PHONE_FULL: Rect; BROWSER_FULL: Rect } => {
+  const portrait = H >= W;
+  // Teléfono: alto ~80% del lienzo, centrado.
+  const phoneH = Math.round(H * (portrait ? 0.78 : 0.82));
+  const phoneW = Math.round(phoneH * PHONE_ASPECT);
+  const PHONE_FULL: Rect = { x: Math.round((W - phoneW) / 2), y: Math.round((H - phoneH) / 2), w: phoneW, h: phoneH };
+  // Navegador (capturas desktop): ancho ~78–92% del lienzo, centrado.
+  const browserW = Math.round(W * (portrait ? 0.92 : 0.78));
+  const browserH = Math.round(browserW / BROWSER_ASPECT);
+  const BROWSER_FULL: Rect = { x: Math.round((W - browserW) / 2), y: Math.round((H - browserH) / 2), w: browserW, h: browserH };
+  return { PHONE_FULL, BROWSER_FULL };
+};
 
 const FrameFade: React.FC<{ at: number; first: boolean; children: React.ReactNode }> = ({
   at,
@@ -46,7 +58,9 @@ export const Scene: React.FC<{ shot: Shot; durationInFrames: number }> = ({
   durationInFrames,
 }) => {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
   const isPhone = shot.device === "phone";
+  const { PHONE_FULL, BROWSER_FULL } = computeRects(width, height);
   const rect = isPhone ? PHONE_FULL : BROWSER_FULL;
 
   const { opacity, ty, scale: mScale } = useSceneMotion(durationInFrames);

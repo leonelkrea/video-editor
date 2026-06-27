@@ -47,7 +47,9 @@ npm run dev                          # preview en vivo (Remotion Studio) → com
 
 ## Notas
 
-- **Formato**: vertical `1080×1920` por defecto (`src/Root.tsx`).
+- **Formato (elección tuya)**: cambia `ORIENTATION` en `src/Root.tsx` → `"vertical"` (1080×1920,
+  capturas **móvil**) u `"horizontal"` (1920×1080, capturas **escritorio**). Los encuadres se
+  adaptan solos.
 - **Whisper es borrador**: revisa los subtítulos antes de renderizar.
 - El symlink `public/Assets → ../Assets` debe existir; si se pierde: `ln -s ../Assets public/Assets`.
 - En otra PC, reinstala Whisper (`node scripts/install-whisper-cpp.mjs small`) y los navegadores de Playwright.

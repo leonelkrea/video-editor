@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+  <!-- PLACEHOLDER: fondo oscuro plano con viñeta. ADAPTA a tu paleta. -->
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#23262E"/>
+      <stop offset="60%" stop-color="#16181D"/>
+      <stop offset="100%" stop-color="#0E0F13"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#vignette)"/>
+</svg>

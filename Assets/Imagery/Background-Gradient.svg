@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+  <!-- PLACEHOLDER: degradado de marca (NAVY -> GREEN). ADAPTA a tu paleta. -->
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16181D"/>
+      <stop offset="55%" stop-color="#1E3A5F"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#brandGrad)"/>
+</svg>

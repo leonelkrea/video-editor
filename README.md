@@ -1,5 +1,8 @@
 # Plantilla Videotutorial (Remotion + Playwright + Whisper)
 
+> 🇻🇪 **Liberado públicamente y gratuito en solidaridad con Venezuela** tras el doble terremoto
+> del 24 de junio de 2026 (M7.2 y M7.5, norte del país). Úsalo libremente. Detalle: [`HUMANITARIO.md`](./HUMANITARIO.md).
+
 Plantilla **lista para usar** que genera un **videotutorial vertical (1080×1920, tamaño
 smartphone)** del software donde la coloques. Captura las pantallas de tu app con
 **Playwright**, las enmarca como un teléfono con cursor animado, y les pone tu

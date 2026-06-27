@@ -9,3 +9,6 @@ public/captions/*.json
 
 # Capturas de UI generadas por capture-screens.mjs (regenerables, no versionar)
 Assets/captures/
+
+# Artefactos de evaluación de la skill (resultados de prueba, no versionar)
+.claude/skills/*-workspace/

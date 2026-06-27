@@ -1,0 +1,23 @@
+{
+  "skill_name": "crear-videotutorial",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Tengo una app Next.js de gestión de gastos en el directorio padre. Quiero un video vertical para Instagram que enseñe cómo un usuario registra un gasto y ve su resumen del mes. Ayúdame a montarlo con esta plantilla.",
+      "expected_output": "Claude entra en el flujo: comprueba terreno (fase 0), fija formato vertical en Root.tsx (fase 1), analiza las rutas/componentes del proyecto padre y propone un guion basado en el user journey (registrar gasto -> ver resumen) con texto para ElevenLabs + tabla escena->ruta->hotspot, y se detiene a confirmar el guion antes de seguir.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "ya tengo el mp3 de la narracion que saque de elevenlabs y lo puse en Assets/Audio/tutorial.wav. que sigue para que el cursor se mueva justo cuando la voz dice las cosas?",
+      "expected_output": "Claude reconoce que la narración ya está colocada y avanza a la fase 4 (transcribir con Whisper: npm run transcribe -- tutorial.wav, revisar captions) y explica la fase 5-6: capturar pantallas y sincronizar cada cursor[].at con los startMs/endMs de Whisper relativos al from de la sección, citando references/timing-y-animacion.md.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Quiero un demo horizontal para YouTube de mi dashboard de analítica (es una web React que corre en localhost:5173). Necesito que se vea la pantalla con un puntero señalando los botones mientras una voz explica.",
+      "expected_output": "Claude elige formato horizontal y avisa de que hay que ajustar WIDTH/HEIGHT en Root.tsx Y los rects de Scene.tsx (layout horizontal). Identifica baseUrl http://localhost:5173, planea capturar con Playwright a viewport desktop, y enlaza el flujo guion -> ElevenLabs -> Whisper -> captura -> animación con cursor.",
+      "files": []
+    }
+  ]
+}

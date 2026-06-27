@@ -5,8 +5,10 @@ smartphone)** del software donde la coloques. Captura las pantallas de tu app co
 **Playwright**, las enmarca como un teléfono con cursor animado, y les pone tu
 **narración de ElevenLabs** (WAV) + subtítulos automáticos opcionales.
 
+> 🚀 Instalación (en el root de tu proyecto) + crear con Claude: **[`INSTALL.md`](./INSTALL.md)**
 > 📖 Guía paso a paso: **[`TUTORIAL.md`](./TUTORIAL.md)**
 > 🔧 Detalle del motor y la variante de screencast: **[`MANUAL.md`](./MANUAL.md)**
+> 🤖 Skill que guía todo el flujo con Claude: `.claude/skills/crear-videotutorial/`
 
 ## Arranque rápido
 
